@@ -15,8 +15,8 @@ class DcmApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: Strings.app_name,
-      theme: getTheme(),
+      title: Strings.appName,
+      theme: DcmTheme.dark(),
       home: const MainPage(),
     );
   }
