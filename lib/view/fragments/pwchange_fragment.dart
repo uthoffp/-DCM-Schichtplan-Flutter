@@ -10,8 +10,13 @@ class PwChangeFragment extends StatefulWidget {
 
 class _PwChangeFragmentState extends State<PwChangeFragment> {
   bool _pwOldVisible = false;
+  final _pwOldController = TextEditingController();
+
   bool _pwNewVisible = false;
+  final _pwNewController = TextEditingController();
+
   bool _pwConfirmVisible = false;
+  final _pwConfirmController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -91,16 +96,14 @@ class _PwChangeFragmentState extends State<PwChangeFragment> {
             Align(
               child: ElevatedButton.icon(
                 onPressed: () {
-                  setState(() {
-
-                  });
+                  setState(() {});
                 },
                 icon: const Icon(Icons.save, size: 18),
-                label: const Text(Strings.btnPwChange, style: TextStyle(fontSize: 18)),
+                label: const Text(Strings.btnPwChange,
+                    style: TextStyle(fontSize: 18)),
               ),
               alignment: Alignment.centerRight,
             )
-
           ],
         ));
   }
