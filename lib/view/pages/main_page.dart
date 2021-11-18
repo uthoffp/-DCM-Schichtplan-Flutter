@@ -15,32 +15,32 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  int _selectedDestination = 0;
+  String _selectedFragment = Strings.menuPlanned;
   Widget _contentWidget = TimeFragment(Strings.menuPlanned);
 
-  void selectDestination(int index) {
+  void selectDestination(String selectedFragment) {
     setState(() {
-      _selectedDestination = index;
-      switch (index) {
-        case 0:
+      _selectedFragment = selectedFragment;
+      switch (selectedFragment) {
+        case Strings.menuPlanned:
           _contentWidget = TimeFragment(Strings.menuPlanned);
           break;
-        case 1:
+        case Strings.menuClocking:
           _contentWidget = ClockingFragment();
           break;
-        case 2:
+        case Strings.menuAbRequest:
           _contentWidget = AbRequestFragment();
           break;
-        case 3:
+        case Strings.menuActual:
           _contentWidget = TimeFragment(Strings.menuActual);
           break;
-        case 4:
+        case Strings.menuContact:
           _contentWidget = ContactFragment();
           break;
-        case 5:
+        case Strings.menuPwChange:
           _contentWidget = PwChangeFragment();
           break;
-        case 6:
+        case Strings.menuLogout:
           logout();
           break;
       }
@@ -57,41 +57,50 @@ class _MainPageState extends State<MainPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(Strings.appName),
+        title: Text(_selectedFragment),
       ),
       drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 50, 16, 8),
-              child: Text(
-                Strings.appName,
-                style: textTheme.headline5,
-              ),
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    Strings.appName,
+                    style: textTheme.headline5,
+                  )),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-              child: Text(
-                'Max Mustermann',
-                style: textTheme.headline6,
-              ),
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text('Max Mustermann', style: textTheme.headline6)),
             ),
             const Divider(
               height: 1,
               thickness: 1,
             ),
             navDrawerItem(
-                context, Icons.calendar_today, Strings.menuPlanned, 0),
-            navDrawerItem(context, Icons.access_alarm, Strings.menuClocking, 1),
+                context, Icons.calendar_today, Strings.menuPlanned),
+            navDrawerItem(context, Icons.access_alarm, Strings.menuClocking),
             navDrawerItem(
-                context, Icons.attach_email, Strings.menuAbRequest, 2),
-            navDrawerItem(context, Icons.calendar_today, Strings.menuActual, 3),
-            navDrawerItem(context, Icons.contact_mail, Strings.menuContact, 4),
+                context, Icons.attach_email, Strings.menuAbRequest),
+            navDrawerItem(context, Icons.calendar_today, Strings.menuActual),
+            navDrawerItem(context, Icons.contact_mail, Strings.menuContact),
             const Divider(height: 1, thickness: 1),
-            navDrawerItem(context, Icons.vpn_key, Strings.menuPwChange, 5),
+            navDrawerItem(context, Icons.vpn_key, Strings.menuPwChange),
             navDrawerItem(
-                context, Icons.power_settings_new, Strings.menuLogout, 6),
+                context, Icons.power_settings_new, Strings.menuLogout),
+            const Expanded(
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                    padding: EdgeInsets.all(16),
+                    child: Text(Strings.menuFooter)),
+              ),
+            ),
           ],
         ),
       ),
@@ -100,7 +109,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   Widget navDrawerItem(
-      BuildContext context, IconData icon, String text, int index) {
+      BuildContext context, IconData icon, String text) {
     return Container(
       padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
       child: ListTile(
@@ -109,9 +118,9 @@ class _MainPageState extends State<MainPage> {
         leading: Icon(icon),
         dense: true,
         title: Text(text),
-        selected: _selectedDestination == index,
+        selected: _selectedFragment == text,
         selectedTileColor: Theme.of(context).colorScheme.primaryVariant,
-        onTap: () => selectDestination(index),
+        onTap: () => selectDestination(text),
       ),
     );
   }

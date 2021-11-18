@@ -42,8 +42,8 @@ class Strings {
   static const String txtGoes = "Geht";
   static const String txtTop10 = "Die letzten 10 Buchungen";
   static const String txtComes = "Kommt";
-  static const String txtShift1 = "Schicht 2";
-  static const String txtShift2 = "Schicht 1";
+  static const String txtShift1 = "Schicht 1";
+  static const String txtShift2 = "Schicht 2";
   static const String txtDate = "Datum";
   static const String txtHolidayHead = "Verbleibende Urlaubstage";
   static const String txtHolidayPrevYear = "Aus Vorjahr:";

@@ -18,6 +18,8 @@ class _PwChangeFragmentState extends State<PwChangeFragment> {
   bool _pwConfirmVisible = false;
   final _pwConfirmController = TextEditingController();
 
+  void _saveNewPw() {}
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -38,7 +40,7 @@ class _PwChangeFragmentState extends State<PwChangeFragment> {
                 suffixIcon: IconButton(
                   icon: Icon(
                     _pwOldVisible ? Icons.visibility : Icons.visibility_off,
-                    color: Theme.of(context).primaryColorDark,
+                    color: Colors.grey,
                   ),
                   onPressed: () {
                     setState(() {
@@ -60,7 +62,7 @@ class _PwChangeFragmentState extends State<PwChangeFragment> {
                 suffixIcon: IconButton(
                   icon: Icon(
                     _pwNewVisible ? Icons.visibility : Icons.visibility_off,
-                    color: Theme.of(context).primaryColorDark,
+                    color: Colors.grey,
                   ),
                   onPressed: () {
                     setState(() {
@@ -82,7 +84,7 @@ class _PwChangeFragmentState extends State<PwChangeFragment> {
                 suffixIcon: IconButton(
                   icon: Icon(
                     _pwConfirmVisible ? Icons.visibility : Icons.visibility_off,
-                    color: Theme.of(context).primaryColorDark,
+                    color: Colors.grey,
                   ),
                   onPressed: () {
                     setState(() {
@@ -95,9 +97,7 @@ class _PwChangeFragmentState extends State<PwChangeFragment> {
             const SizedBox(height: 16),
             Align(
               child: ElevatedButton.icon(
-                onPressed: () {
-                  setState(() {});
-                },
+                onPressed: _saveNewPw,
                 icon: const Icon(Icons.save, size: 18),
                 label: const Text(Strings.btnPwChange,
                     style: TextStyle(fontSize: 18)),
@@ -106,29 +106,5 @@ class _PwChangeFragmentState extends State<PwChangeFragment> {
             )
           ],
         ));
-  }
-
-  TextFormField passwordField(BuildContext context, bool pwVisible) {
-    return TextFormField(
-      keyboardType: TextInputType.text,
-      obscureText: pwVisible,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(),
-        labelText: Strings.hintOldPw,
-        floatingLabelBehavior: FloatingLabelBehavior.auto,
-        hintText: Strings.hintOldPw,
-        suffixIcon: IconButton(
-          icon: Icon(
-            pwVisible ? Icons.visibility : Icons.visibility_off,
-            color: Theme.of(context).primaryColorDark,
-          ),
-          onPressed: () {
-            setState(() {
-              pwVisible = !pwVisible;
-            });
-          },
-        ),
-      ),
-    );
   }
 }

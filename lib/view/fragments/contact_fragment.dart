@@ -1,4 +1,3 @@
-import 'package:dcm_flutter/resources/strings.dart';
 import 'package:flutter/material.dart';
 
 class ContactFragment extends StatefulWidget {
