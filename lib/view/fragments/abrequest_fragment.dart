@@ -13,6 +13,7 @@ class AbRequestFragment extends StatefulWidget {
 class _AbRequestFragmentState extends State<AbRequestFragment> {
   bool _menuExpanded = false;
   bool _fileAttached = false;
+
   var _date = DateTime.now();
   final _dateController = TextEditingController();
   final _commentController = TextEditingController();
