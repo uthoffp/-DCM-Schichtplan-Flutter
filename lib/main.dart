@@ -17,7 +17,7 @@ class DcmApp extends StatelessWidget {
     return MaterialApp(
       title: Strings.appName,
       theme: getTheme(),
-      home: const MainPage(),
+      home: MainPage(),
     );
   }
 

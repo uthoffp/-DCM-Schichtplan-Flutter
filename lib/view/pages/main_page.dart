@@ -7,6 +7,8 @@ import 'package:dcm_flutter/view/fragments/time_fragment.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'login_page.dart';
+
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
 
@@ -42,13 +44,17 @@ class _MainPageState extends State<MainPage> {
           break;
         case Strings.menuLogout:
           logout();
-          break;
+          return;
       }
       Navigator.of(context).pop();
     });
   }
 
-  void logout() {}
+  void logout() {
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
+      return LoginPage();
+    }));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,11 +88,9 @@ class _MainPageState extends State<MainPage> {
               height: 1,
               thickness: 1,
             ),
-            navDrawerItem(
-                context, Icons.calendar_today, Strings.menuPlanned),
+            navDrawerItem(context, Icons.calendar_today, Strings.menuPlanned),
             navDrawerItem(context, Icons.access_alarm, Strings.menuClocking),
-            navDrawerItem(
-                context, Icons.attach_email, Strings.menuAbRequest),
+            navDrawerItem(context, Icons.attach_email, Strings.menuAbRequest),
             navDrawerItem(context, Icons.calendar_today, Strings.menuActual),
             navDrawerItem(context, Icons.contact_mail, Strings.menuContact),
             const Divider(height: 1, thickness: 1),
@@ -108,8 +112,7 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
-  Widget navDrawerItem(
-      BuildContext context, IconData icon, String text) {
+  Widget navDrawerItem(BuildContext context, IconData icon, String text) {
     return Container(
       padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
       child: ListTile(
