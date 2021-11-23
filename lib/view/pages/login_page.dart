@@ -49,10 +49,10 @@ class _LoginPageState extends State<LoginPage> {
       _toggleLoading(true);
       _viewModel
           .login(_companySelectController.text, _usernameController.text,
-          _passwordController.text)
+              _passwordController.text)
           .then((user) {
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
-          return MainPage();
+          return MainPage(user);
         }));
       }).onError((error, stackTrace) {
         const snackBar = SnackBar(

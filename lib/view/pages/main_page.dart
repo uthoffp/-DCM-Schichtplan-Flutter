@@ -1,3 +1,4 @@
+import 'package:dcm_flutter/repositories/model/user.dart';
 import 'package:dcm_flutter/resources/strings.dart';
 import 'package:dcm_flutter/view/fragments/abrequest_fragment.dart';
 import 'package:dcm_flutter/view/fragments/clocking_fragment.dart';
@@ -10,15 +11,19 @@ import 'package:flutter/material.dart';
 import 'login_page.dart';
 
 class MainPage extends StatefulWidget {
-  const MainPage({Key? key}) : super(key: key);
+  final User _user;
+  const MainPage(this._user, {Key? key}) : super(key: key);
 
   @override
-  State<MainPage> createState() => _MainPageState();
+  State<MainPage> createState() => _MainPageState(_user);
 }
 
 class _MainPageState extends State<MainPage> {
   String _selectedFragment = Strings.menuPlanned;
   Widget _contentWidget = TimeFragment(Strings.menuPlanned);
+  User _user;
+
+  _MainPageState(this._user);
 
   void selectDestination(String selectedFragment) {
     setState(() {
@@ -37,7 +42,7 @@ class _MainPageState extends State<MainPage> {
           _contentWidget = TimeFragment(Strings.menuActual);
           break;
         case Strings.menuContact:
-          _contentWidget = ContactFragment();
+          _contentWidget = ContactFragment(_user);
           break;
         case Strings.menuPwChange:
           _contentWidget = PwChangeFragment();
@@ -82,7 +87,7 @@ class _MainPageState extends State<MainPage> {
               padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
               child: Align(
                   alignment: Alignment.centerLeft,
-                  child: Text('Max Mustermann', style: textTheme.headline6)),
+                  child: Text(_user.toString(), style: textTheme.headline6)),
             ),
             const Divider(
               height: 1,
