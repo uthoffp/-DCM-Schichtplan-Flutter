@@ -1,7 +1,7 @@
 class Strings {
   static const String appName = "DCM Schichtplan";
 
-  static const String baseUrl = "http://192.168.56.1:8080";
+  static const String baseUrl = "http://h2955028.stratoserver.net:8080";
   static const String company = "Hotel in Focus";
   static const String customerNr = "Kundennr.: 47110815";
 
@@ -18,6 +18,7 @@ class Strings {
   static const String menuDayFull = "1 Tag";
   static const String menuDayHalf = "<![CDATA[&#189; Tag]]>";
 
+  static const String hintPw = "Passwort";
   static const String hintOldPw = "Altes Passwort";
   static const String hintPwConfirm = "Passwort wiederholen";
   static const String hintPwNew = "Neues Passwort";
@@ -27,9 +28,10 @@ class Strings {
   static const String hintUsername = "Benutzername";
   static const String hintComment = "Bemerkung";
   static const String hintAbType = "Fehlzeit Typ";
-  static const String btnAbCheck = "Antrag prüfen";
   static const String hintFirstDayOfWeek = "Erster Tag der Woche";
 
+
+  static const String btnAbCheck = "Antrag prüfen";
   static const String btnAttach = "Anhang Anfügen";
   static const String btnPwChange = "Passwort ändern";
   static const String btnLogin = "Anmelden";

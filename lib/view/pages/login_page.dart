@@ -1,8 +1,10 @@
 import 'package:dcm_flutter/resources/strings.dart';
-import 'package:dcm_flutter/view/pages/main_page.dart';
 import 'package:dcm_flutter/view/widgets/drop_down.dart';
+import 'package:dcm_flutter/viewmodel/login_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'main_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -12,20 +14,54 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final _companySelectController = TextEditingController();
+  final _viewModel = LoginViewModel();
 
-  void _login() {
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
-      return MainPage();
-    }));
+  final _companySelectController = TextEditingController();
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
+  var _companies = [];
+
+  @override
+  void initState() {
+    _viewModel.getCompanyData();
+    _viewModel.companies.stream.listen((companies) {
+      setState(() {
+        _companies = companies;
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
+
     bool _isLoading = false;
     bool _pwVisible = false;
+
+    void _toggleLoading(bool value) {
+      setState(() {
+        _isLoading = value;
+      });
+    }
+
+    void _login() {
+      _toggleLoading(true);
+      _viewModel
+          .login(_companySelectController.text, _usernameController.text,
+          _passwordController.text)
+          .then((user) {
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
+          return MainPage();
+        }));
+      }).onError((error, stackTrace) {
+        const snackBar = SnackBar(
+          behavior: SnackBarBehavior.floating,
+          content: Text("Benutzername oder Kennwort ist falsch."),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }).whenComplete(() => _toggleLoading(false));
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -40,77 +76,78 @@ class _LoginPageState extends State<LoginPage> {
           visible: _isLoading,
         ),
         Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            children: [
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(Strings.txtCompany, style: textTheme.headline2),
-              ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text("Hotel in Focus", style: textTheme.headline3),
-              ),
-
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text("Kundennr.: 47110815", style: textTheme.headline3),
-              ),
-              const SizedBox(height: 24),
-              DropDownInputField(
-                controller: _companySelectController,
-                hint: Strings.hintCompany,
-                onChanged: () => setState(() {
-                  _companySelectController.text;
-                }),
-                options: const ["Company 1", "Company 2"],
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
-                keyboardType: TextInputType.text,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.person),
-                  labelText: Strings.hintPwConfirm,
-                  floatingLabelBehavior: FloatingLabelBehavior.auto,
-                  hintText: Strings.hintPwConfirm,
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(Strings.txtCompany, style: textTheme.headline2),
                 ),
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
-                keyboardType: TextInputType.text,
-                obscureText: _pwVisible,
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
-                  labelText: Strings.hintPwConfirm,
-                  floatingLabelBehavior: FloatingLabelBehavior.auto,
-                  hintText: Strings.hintPwConfirm,
-                  prefixIcon: const Icon(Icons.vpn_key),
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      _pwVisible ? Icons.visibility : Icons.visibility_off,
-                      color: Colors.grey,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _pwVisible = !_pwVisible;
-                      });
-                    },
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text("Hotel in Focus", style: textTheme.headline3),
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child:
+                      Text("Kundennr.: 47110815", style: textTheme.headline3),
+                ),
+                const SizedBox(height: 24),
+                DropDownInputField(
+                  controller: _companySelectController,
+                  hint: Strings.hintCompany,
+                  onChanged: () => setState(() {
+                    _companySelectController.text;
+                  }),
+                  options: _companies,
+                ),
+                const SizedBox(height: 16),
+                TextFormField(
+                  controller: _usernameController,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    prefixIcon: Icon(Icons.person),
+                    labelText: Strings.hintUsername,
+                    floatingLabelBehavior: FloatingLabelBehavior.auto,
+                    hintText: Strings.hintUsername,
                   ),
                 ),
-              ),
-              const SizedBox(height: 16),
-              Align(
-                child: ElevatedButton(
-                  onPressed: _login,
-                  child: const Text(Strings.btnLogin,
-                      style: TextStyle(fontSize: 18)),
+                const SizedBox(height: 16),
+                TextFormField(
+                  controller: _passwordController,
+                  keyboardType: TextInputType.text,
+                  obscureText: _pwVisible,
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    labelText: Strings.hintPw,
+                    floatingLabelBehavior: FloatingLabelBehavior.auto,
+                    hintText: Strings.hintPw,
+                    prefixIcon: const Icon(Icons.vpn_key),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _pwVisible ? Icons.visibility : Icons.visibility_off,
+                        color: Colors.grey,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _pwVisible = !_pwVisible;
+                        });
+                      },
+                    ),
+                  ),
                 ),
-                alignment: Alignment.centerRight,
-              )
-            ],
-          )
-        )
+                const SizedBox(height: 16),
+                Align(
+                  child: ElevatedButton(
+                    onPressed: _login,
+                    child: const Text(Strings.btnLogin,
+                        style: TextStyle(fontSize: 18)),
+                  ),
+                  alignment: Alignment.centerRight,
+                )
+              ],
+            ))
       ]),
     );
   }
