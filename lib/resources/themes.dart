@@ -11,7 +11,7 @@ class DcmTheme {
     bodyText2: GoogleFonts.openSans(
       fontSize: 16.0,
       fontWeight: FontWeight.w400,
-      color: Colors.black54,
+      color: Colors.black87,
     ),
     headline1: GoogleFonts.openSans(
       fontSize: 32.0,

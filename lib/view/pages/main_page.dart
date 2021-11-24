@@ -21,8 +21,8 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   String _selectedFragment = Strings.menuPlanned;
-  Widget _contentWidget = TimeFragment(Strings.menuPlanned);
-  User _user;
+  Widget _contentWidget = Container();
+  final User _user;
 
   _MainPageState(this._user);
 
@@ -31,7 +31,7 @@ class _MainPageState extends State<MainPage> {
       _selectedFragment = selectedFragment;
       switch (selectedFragment) {
         case Strings.menuPlanned:
-          _contentWidget = TimeFragment(Strings.menuPlanned);
+          _contentWidget = TimeFragment(Strings.menuPlanned, _user);
           break;
         case Strings.menuClocking:
           _contentWidget = ClockingFragment(_user);
@@ -40,7 +40,7 @@ class _MainPageState extends State<MainPage> {
           _contentWidget = AbRequestFragment();
           break;
         case Strings.menuActual:
-          _contentWidget = TimeFragment(Strings.menuActual);
+          _contentWidget = TimeFragment(Strings.menuActual, _user);
           break;
         case Strings.menuContact:
           _contentWidget = ContactFragment(_user);
@@ -58,8 +58,18 @@ class _MainPageState extends State<MainPage> {
 
   void logout() {
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
-      return LoginPage();
+      return const LoginPage();
     }));
+  }
+
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      _contentWidget = TimeFragment(Strings.menuPlanned, _user);
+    });
+
   }
 
   @override

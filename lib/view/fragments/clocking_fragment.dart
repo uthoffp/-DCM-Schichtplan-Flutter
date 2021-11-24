@@ -50,6 +50,7 @@ class _ClockingFragmentState extends State<ClockingFragment> {
 
   @override
   void initState() {
+    super.initState();
     _viewModel = ClockingViewModel(_user);
     _viewModel!.getClockingTimes();
     _viewModel!.clockingTimes.stream.listen((value) {
@@ -77,8 +78,8 @@ class _ClockingFragmentState extends State<ClockingFragment> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Text(_viewModel!.getCurrentDate()),
-                        Text(_viewModel!.getCurrentTime()),
+                        Expanded(child: Align(alignment: Alignment.center, child: Text(_viewModel!.getCurrentDate()))),
+                        Expanded(child: Align(alignment: Alignment.center, child: Text("${_viewModel!.getCurrentTime()} Uhr"))),
                       ],
                     ),
                     const Padding(padding: EdgeInsets.fromLTRB(0, 16, 0, 16), child: Divider(height: 1, thickness: 1)),
@@ -107,8 +108,8 @@ class _ClockingFragmentState extends State<ClockingFragment> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: const [
-                        Text(Strings.txtComes),
-                        Text(Strings.txtGoes),
+                        Expanded(child: Align(alignment: Alignment.center, child: Text(Strings.txtComes))),
+                        Expanded(child: Align(alignment: Alignment.center, child: Text(Strings.txtGoes))),
                       ],
                     ),
                   ],
@@ -117,12 +118,11 @@ class _ClockingFragmentState extends State<ClockingFragment> {
             ),
             const SizedBox(height: 16),
             Align(alignment: Alignment.centerLeft, child: Text(Strings.txtTop10, style: textTheme.headline2)),
+            const SizedBox(height: 8),
             Expanded(
-                child: Container(
-              child: ListView(
-                children: _clockingTimes.map((clockingTime) => ClockingItem(clockingTime)).toList(),
-              ),
-            ))
+                child: ListView(
+                  children: _clockingTimes.map((clockingTime) => ClockingItem(clockingTime)).toList(),
+                ))
           ],
         ));
   }

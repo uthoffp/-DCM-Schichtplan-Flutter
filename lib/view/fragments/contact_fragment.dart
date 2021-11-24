@@ -22,6 +22,7 @@ class _ContactFragmentState extends State<ContactFragment> {
 
   @override
   void initState() {
+    super.initState();
     ContactViewModel(_user).getCompanyData().then((company) {
       setState(() {
         _name = company.companyName1;

@@ -14,24 +14,22 @@ class ClockingItem extends StatelessWidget {
     return Container(
         child: Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                  child:
-                      Align(alignment: Alignment.centerLeft, child: Text(_clockingTime.getDate(), style: textStyle))),
-              Expanded(
-                  child: Align(
-                      alignment: Alignment.center, child: Text(_clockingTime.e_Time + " Uhr", style: textStyle))),
-              Expanded(
-                  child:
-                      Align(alignment: Alignment.centerRight, child: Text(_clockingTime.getStatus(), style: textStyle)))
-            ],
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(child: Align(alignment: Alignment.center, child: Text(_clockingTime.getDate(), style: textStyle))),
+            Expanded(
+                child:
+                    Align(alignment: Alignment.center, child: Text(_clockingTime.e_Time + " Uhr", style: textStyle))),
+            Expanded(
+                child: Align(alignment: Alignment.center, child: Text(_clockingTime.getStatus(), style: textStyle)))
+          ],
         ),
-        const Divider()
+        const Padding(
+          padding: EdgeInsets.fromLTRB(8, 1, 8, 0),
+          child: Divider(),
+        )
+
       ],
     ));
   }
