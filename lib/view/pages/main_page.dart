@@ -12,6 +12,7 @@ import 'login_page.dart';
 
 class MainPage extends StatefulWidget {
   final User _user;
+
   const MainPage(this._user, {Key? key}) : super(key: key);
 
   @override
@@ -33,7 +34,7 @@ class _MainPageState extends State<MainPage> {
           _contentWidget = TimeFragment(Strings.menuPlanned);
           break;
         case Strings.menuClocking:
-          _contentWidget = ClockingFragment();
+          _contentWidget = ClockingFragment(_user);
           break;
         case Strings.menuAbRequest:
           _contentWidget = AbRequestFragment();
@@ -85,9 +86,7 @@ class _MainPageState extends State<MainPage> {
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-              child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(_user.toString(), style: textTheme.headline6)),
+              child: Align(alignment: Alignment.centerLeft, child: Text(_user.toString(), style: textTheme.headline6)),
             ),
             const Divider(
               height: 1,
@@ -100,14 +99,11 @@ class _MainPageState extends State<MainPage> {
             navDrawerItem(context, Icons.contact_mail, Strings.menuContact),
             const Divider(height: 1, thickness: 1),
             navDrawerItem(context, Icons.vpn_key, Strings.menuPwChange),
-            navDrawerItem(
-                context, Icons.power_settings_new, Strings.menuLogout),
+            navDrawerItem(context, Icons.power_settings_new, Strings.menuLogout),
             const Expanded(
               child: Align(
                 alignment: Alignment.bottomCenter,
-                child: Padding(
-                    padding: EdgeInsets.all(16),
-                    child: Text(Strings.menuFooter)),
+                child: Padding(padding: EdgeInsets.all(16), child: Text(Strings.menuFooter)),
               ),
             ),
           ],
@@ -121,8 +117,7 @@ class _MainPageState extends State<MainPage> {
     return Container(
       padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
       child: ListTile(
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
         leading: Icon(icon),
         dense: true,
         title: Text(text),

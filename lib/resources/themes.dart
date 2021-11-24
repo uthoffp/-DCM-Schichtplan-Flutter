@@ -8,6 +8,11 @@ class DcmTheme {
       fontWeight: FontWeight.w700,
       color: Colors.black87,
     ),
+    bodyText2: GoogleFonts.openSans(
+      fontSize: 16.0,
+      fontWeight: FontWeight.w400,
+      color: Colors.black54,
+    ),
     headline1: GoogleFonts.openSans(
       fontSize: 32.0,
       fontWeight: FontWeight.bold,

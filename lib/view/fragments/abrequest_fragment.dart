@@ -58,9 +58,7 @@ class _AbRequestFragmentState extends State<AbRequestFragment> {
               hintText: Strings.hintAbType,
               suffixIcon: IconButton(
                 icon: Icon(
-                  _menuExpanded
-                      ? Icons.keyboard_arrow_down_rounded
-                      : Icons.keyboard_arrow_up_rounded,
+                  _menuExpanded ? Icons.keyboard_arrow_down_rounded : Icons.keyboard_arrow_up_rounded,
                   color: Colors.grey,
                 ),
                 onPressed: () {
@@ -87,9 +85,8 @@ class _AbRequestFragmentState extends State<AbRequestFragment> {
                       readOnly: true,
                       onTap: _openDatePicker,
                       textAlign: TextAlign.start,
-                      decoration: const InputDecoration(
-                          prefixIcon: Icon(Icons.calendar_today),
-                          border: OutlineInputBorder()),
+                      decoration:
+                          const InputDecoration(prefixIcon: Icon(Icons.calendar_today), border: OutlineInputBorder()),
                     ),
                   )),
               Expanded(
@@ -101,9 +98,7 @@ class _AbRequestFragmentState extends State<AbRequestFragment> {
                       border: const OutlineInputBorder(),
                       suffixIcon: IconButton(
                         icon: Icon(
-                          _menuExpanded
-                              ? Icons.keyboard_arrow_down_rounded
-                              : Icons.keyboard_arrow_up_rounded,
+                          _menuExpanded ? Icons.keyboard_arrow_down_rounded : Icons.keyboard_arrow_up_rounded,
                           color: Colors.grey,
                         ),
                         onPressed: () {
@@ -134,9 +129,8 @@ class _AbRequestFragmentState extends State<AbRequestFragment> {
                       readOnly: true,
                       onTap: _openDatePicker,
                       textAlign: TextAlign.start,
-                      decoration: const InputDecoration(
-                          prefixIcon: Icon(Icons.calendar_today),
-                          border: OutlineInputBorder()),
+                      decoration:
+                          const InputDecoration(prefixIcon: Icon(Icons.calendar_today), border: OutlineInputBorder()),
                     ),
                   )),
               Expanded(
@@ -148,9 +142,7 @@ class _AbRequestFragmentState extends State<AbRequestFragment> {
                       border: const OutlineInputBorder(),
                       suffixIcon: IconButton(
                         icon: Icon(
-                          _menuExpanded
-                              ? Icons.keyboard_arrow_down_rounded
-                              : Icons.keyboard_arrow_up_rounded,
+                          _menuExpanded ? Icons.keyboard_arrow_down_rounded : Icons.keyboard_arrow_up_rounded,
                           color: Colors.grey,
                         ),
                         onPressed: () {
@@ -192,9 +184,7 @@ class _AbRequestFragmentState extends State<AbRequestFragment> {
               const SizedBox(width: 16),
               Visibility(
                   visible: _fileAttached,
-                  child: GestureDetector(
-                      onTap: _removeAttachment,
-                      child: const Text(Strings.btnRemoveAttachment)))
+                  child: GestureDetector(onTap: _removeAttachment, child: const Text(Strings.btnRemoveAttachment)))
             ],
           ),
           const SizedBox(height: 8),
@@ -202,8 +192,7 @@ class _AbRequestFragmentState extends State<AbRequestFragment> {
             child: ElevatedButton.icon(
               onPressed: _checkRequest,
               icon: const Icon(Icons.save, size: 18),
-              label: const Text(Strings.btnAbCheck,
-                  style: TextStyle(fontSize: 18)),
+              label: const Text(Strings.btnAbCheck, style: TextStyle(fontSize: 18)),
             ),
             alignment: Alignment.centerRight,
           )

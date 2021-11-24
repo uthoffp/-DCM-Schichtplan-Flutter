@@ -31,7 +31,7 @@ class _PwChangeFragmentState extends State<PwChangeFragment> {
           children: [
             TextFormField(
               keyboardType: TextInputType.text,
-              obscureText: _pwOldVisible,
+              obscureText: !_pwOldVisible,
               decoration: InputDecoration(
                 border: const OutlineInputBorder(),
                 labelText: Strings.hintOldPw,
@@ -53,7 +53,7 @@ class _PwChangeFragmentState extends State<PwChangeFragment> {
             const SizedBox(height: 16),
             TextFormField(
               keyboardType: TextInputType.text,
-              obscureText: _pwNewVisible,
+              obscureText: !_pwNewVisible,
               decoration: InputDecoration(
                 border: const OutlineInputBorder(),
                 labelText: Strings.hintPwNew,
@@ -75,7 +75,7 @@ class _PwChangeFragmentState extends State<PwChangeFragment> {
             const SizedBox(height: 16),
             TextFormField(
               keyboardType: TextInputType.text,
-              obscureText: _pwConfirmVisible,
+              obscureText: !_pwConfirmVisible,
               decoration: InputDecoration(
                 border: const OutlineInputBorder(),
                 labelText: Strings.hintPwConfirm,
@@ -99,8 +99,7 @@ class _PwChangeFragmentState extends State<PwChangeFragment> {
               child: ElevatedButton.icon(
                 onPressed: _saveNewPw,
                 icon: const Icon(Icons.save, size: 18),
-                label: const Text(Strings.btnPwChange,
-                    style: TextStyle(fontSize: 18)),
+                label: const Text(Strings.btnPwChange, style: TextStyle(fontSize: 18)),
               ),
               alignment: Alignment.centerRight,
             )

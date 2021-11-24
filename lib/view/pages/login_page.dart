@@ -19,13 +19,20 @@ class _LoginPageState extends State<LoginPage> {
   final _companySelectController = TextEditingController();
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
+
   var _companies = [];
+  bool _isLoading = false;
+  bool _pwVisible = false;
 
   @override
   void initState() {
+    super.initState();
+
     _viewModel.getCompanyData();
     _viewModel.companies.stream.listen((companies) {
       setState(() {
+        _usernameController.text = "e@mail.de";
+        _passwordController.text = "1234abcd";
         _companies = companies;
       });
     });
@@ -36,9 +43,6 @@ class _LoginPageState extends State<LoginPage> {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
 
-    bool _isLoading = false;
-    bool _pwVisible = false;
-
     void _toggleLoading(bool value) {
       setState(() {
         _isLoading = value;
@@ -47,10 +51,7 @@ class _LoginPageState extends State<LoginPage> {
 
     void _login() {
       _toggleLoading(true);
-      _viewModel
-          .login(_companySelectController.text, _usernameController.text,
-              _passwordController.text)
-          .then((user) {
+      _viewModel.login(_companySelectController.text, _usernameController.text, _passwordController.text).then((user) {
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
           return MainPage(user);
         }));
@@ -89,8 +90,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 Align(
                   alignment: Alignment.centerLeft,
-                  child:
-                      Text("Kundennr.: 47110815", style: textTheme.headline3),
+                  child: Text("Kundennr.: 47110815", style: textTheme.headline3),
                 ),
                 const SizedBox(height: 24),
                 DropDownInputField(
@@ -117,7 +117,7 @@ class _LoginPageState extends State<LoginPage> {
                 TextFormField(
                   controller: _passwordController,
                   keyboardType: TextInputType.text,
-                  obscureText: _pwVisible,
+                  obscureText: !_pwVisible,
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
                     labelText: Strings.hintPw,
@@ -141,8 +141,7 @@ class _LoginPageState extends State<LoginPage> {
                 Align(
                   child: ElevatedButton(
                     onPressed: _login,
-                    child: const Text(Strings.btnLogin,
-                        style: TextStyle(fontSize: 18)),
+                    child: const Text(Strings.btnLogin, style: TextStyle(fontSize: 18)),
                   ),
                   alignment: Alignment.centerRight,
                 )

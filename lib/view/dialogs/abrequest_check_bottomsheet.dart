@@ -11,8 +11,7 @@ class AbRequestCheckBottomSheet {
           return Container(
               padding: const EdgeInsets.all(8),
               child: Column(
-                children: [
-                ],
+                children: [],
               ));
         });
   }

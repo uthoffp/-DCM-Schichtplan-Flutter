@@ -30,8 +30,7 @@ class _DropDownInputFieldState<T> extends State<DropDownInputField<T>> {
         builder: (_) => SimpleDialog(children: [
               for (var i = 0; i < widget.options.length; i++)
                 SimpleDialogOption(
-                  onPressed: () =>
-                      _onOptionSelected(widget.options[i].toString()),
+                  onPressed: () => _onOptionSelected(widget.options[i].toString()),
                   child: Text(
                     widget.options[i].toString(),
                     style: Theme.of(context).textTheme.headline2,
@@ -61,9 +60,7 @@ class _DropDownInputFieldState<T> extends State<DropDownInputField<T>> {
           floatingLabelBehavior: FloatingLabelBehavior.auto,
           hintText: widget.hint,
           suffixIcon: Icon(
-            _menuExpanded
-                ? Icons.keyboard_arrow_down_rounded
-                : Icons.keyboard_arrow_up_rounded,
+            _menuExpanded ? Icons.keyboard_arrow_down_rounded : Icons.keyboard_arrow_up_rounded,
             color: Colors.grey,
           )),
     );

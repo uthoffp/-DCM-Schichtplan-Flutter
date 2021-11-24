@@ -1,10 +1,10 @@
-import 'package:dcm_flutter/repositories/model/company.dart';
 import 'package:dcm_flutter/repositories/model/user.dart';
 import 'package:dcm_flutter/viewmodel/contact_viewmodel.dart';
 import 'package:flutter/material.dart';
 
 class ContactFragment extends StatefulWidget {
   final User _user;
+
   const ContactFragment(this._user, {Key? key}) : super(key: key);
 
   @override
@@ -42,27 +42,19 @@ class _ContactFragmentState extends State<ContactFragment> {
         child: Column(children: [
           Align(
             alignment: Alignment.centerLeft,
-            child: Padding(
-                padding: const EdgeInsets.all(8),
-                child: Text(_name, style: textTheme.headline5)),
+            child: Padding(padding: const EdgeInsets.all(8), child: Text(_name, style: textTheme.headline5)),
           ),
           Align(
             alignment: Alignment.centerLeft,
-            child: Padding(
-                padding: const EdgeInsets.all(8),
-                child: Text(_street, style: textTheme.headline5)),
+            child: Padding(padding: const EdgeInsets.all(8), child: Text(_street, style: textTheme.headline5)),
           ),
           Align(
             alignment: Alignment.centerLeft,
-            child: Padding(
-                padding: const EdgeInsets.all(8),
-                child: Text(_city, style: textTheme.headline5)),
+            child: Padding(padding: const EdgeInsets.all(8), child: Text(_city, style: textTheme.headline5)),
           ),
           Align(
             alignment: Alignment.centerLeft,
-            child: Padding(
-                padding: const EdgeInsets.all(8),
-                child: Text(_phone, style: textTheme.headline5)),
+            child: Padding(padding: const EdgeInsets.all(8), child: Text(_phone, style: textTheme.headline5)),
           ),
         ]));
   }

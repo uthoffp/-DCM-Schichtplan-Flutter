@@ -12,18 +12,14 @@ class CompanyRepository {
 
     if (response.statusCode == 200) {
       Iterable l = json.decode(response.body);
-      return List<Company>.from(l.map((model)=> Company.fromJson(model)));
+      return List<Company>.from(l.map((model) => Company.fromJson(model)));
     } else {
       throw Exception('Unable to load company data');
     }
   }
 
   Future<Company> getCompany(User user) async {
-
-    Map<String, String> requestHeaders = {
-      'Content-type': 'application/json',
-      'auth': user.token
-    };
+    Map<String, String> requestHeaders = {'Content-type': 'application/json', 'auth': user.token};
 
     String url = Strings.baseUrl + "/company/${user.company}";
 

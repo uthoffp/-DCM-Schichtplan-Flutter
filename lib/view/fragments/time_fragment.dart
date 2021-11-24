@@ -91,37 +91,31 @@ class _TimeFragmentState extends State<TimeFragment> {
             children: [
               Expanded(
                 child: Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5.0)),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
                     child: Padding(
                         padding: const EdgeInsets.all(8),
                         child: Align(
-                          child:
-                          Text(Strings.txtDate, style: textTheme.headline2),
+                          child: Text(Strings.txtDate, style: textTheme.headline2),
                           alignment: Alignment.center,
                         ))),
               ),
               Expanded(
                 child: Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5.0)),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
                     child: Padding(
                         padding: const EdgeInsets.all(8),
                         child: Align(
-                          child:
-                              Text(Strings.txtShift1, style: textTheme.headline2),
+                          child: Text(Strings.txtShift1, style: textTheme.headline2),
                           alignment: Alignment.center,
                         ))),
               ),
               Expanded(
                 child: Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5.0)),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
                     child: Padding(
                         padding: const EdgeInsets.all(8),
                         child: Align(
-                          child:
-                          Text(Strings.txtShift2, style: textTheme.headline2),
+                          child: Text(Strings.txtShift2, style: textTheme.headline2),
                           alignment: Alignment.center,
                         ))),
               ),
