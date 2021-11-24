@@ -10,7 +10,7 @@ class TimeFragment extends StatefulWidget {
   final User _user;
   final String type;
 
-  const TimeFragment(this.type, this._user, {Key? key}) : super(key: key);
+  const TimeFragment(this.type, this._user, Key? key) : super(key: key);
 
   @override
   State<TimeFragment> createState() => _TimeFragmentState(_user, type);

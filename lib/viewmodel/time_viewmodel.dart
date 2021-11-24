@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:dcm_flutter/repositories/datasource/time_repository.dart';
 import 'package:dcm_flutter/repositories/model/time_info.dart';
 import 'package:dcm_flutter/repositories/model/user.dart';
+import 'package:dcm_flutter/resources/strings.dart';
 import 'package:intl/intl.dart';
 
 class TimeViewModel {
@@ -20,7 +21,7 @@ class TimeViewModel {
     String start = dateFormat.format(date);
     String stop = dateFormat.format(date.add(const Duration(days: 14)));
 
-    if (_type == "actual") {
+    if (_type == Strings.menuActual) {
       repo.getTimesActual(_user, start, stop).then((result) {
         times.add(result);
       }).onError((error, stackTrace) {

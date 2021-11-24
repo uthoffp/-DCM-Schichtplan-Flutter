@@ -31,7 +31,8 @@ class _MainPageState extends State<MainPage> {
       _selectedFragment = selectedFragment;
       switch (selectedFragment) {
         case Strings.menuPlanned:
-          _contentWidget = TimeFragment(Strings.menuPlanned, _user);
+          _contentWidget = Container();
+          _contentWidget = TimeFragment(Strings.menuPlanned, _user, UniqueKey());
           break;
         case Strings.menuClocking:
           _contentWidget = ClockingFragment(_user);
@@ -40,7 +41,8 @@ class _MainPageState extends State<MainPage> {
           _contentWidget = AbRequestFragment();
           break;
         case Strings.menuActual:
-          _contentWidget = TimeFragment(Strings.menuActual, _user);
+          _contentWidget = Container();
+          _contentWidget = TimeFragment(Strings.menuActual, _user, UniqueKey());
           break;
         case Strings.menuContact:
           _contentWidget = ContactFragment(_user);
@@ -67,7 +69,7 @@ class _MainPageState extends State<MainPage> {
   void initState() {
     super.initState();
     setState(() {
-      _contentWidget = TimeFragment(Strings.menuPlanned, _user);
+      _contentWidget = TimeFragment(Strings.menuPlanned, _user, UniqueKey());
     });
 
   }
