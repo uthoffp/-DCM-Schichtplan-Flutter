@@ -16,7 +16,7 @@ class Strings {
   static const String menuLicences = "Lizenzen";
   static const String menuWeb = "Web-Version";
   static const String menuDayFull = "1 Tag";
-  static const String menuDayHalf = "<![CDATA[&#189; Tag]]>";
+  static const String menuDayHalf = "1/2 Tag";
 
   static const String hintPw = "Passwort";
   static const String hintOldPw = "Altes Passwort";

@@ -2,16 +2,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DropDownInputField<T> extends StatefulWidget {
-  final String hint;
+  final String? hint;
   final List<T> options;
   final void Function()? onChanged;
   final TextEditingController controller;
+  bool showInitValue;
 
   DropDownInputField({
-    required this.hint,
+    this.hint,
     required this.options,
     required this.controller,
-    required this.onChanged,
+    this.onChanged,
+    required this.showInitValue,
   });
 
   @override
@@ -20,6 +22,14 @@ class DropDownInputField<T> extends StatefulWidget {
 
 class _DropDownInputFieldState<T> extends State<DropDownInputField<T>> {
   bool _menuExpanded = false;
+
+
+  @override
+  void initState() {
+    setState(() {
+      widget.controller.text = widget.showInitValue && widget.options[0] != null  ? widget.options[0].toString() : "";
+    });
+  }
 
   void _openOptions() {
     setState(() {
@@ -43,7 +53,7 @@ class _DropDownInputFieldState<T> extends State<DropDownInputField<T>> {
 
   void _onOptionSelected(String text) {
     widget.controller.text = text;
-    widget.onChanged!();
+    if(widget.onChanged != null) widget.onChanged!();
     Navigator.pop(context, true);
   }
 
@@ -55,14 +65,19 @@ class _DropDownInputFieldState<T> extends State<DropDownInputField<T>> {
       readOnly: true,
       onTap: _openOptions,
       decoration: InputDecoration(
-          border: const OutlineInputBorder(),
-          labelText: widget.hint,
-          floatingLabelBehavior: FloatingLabelBehavior.auto,
-          hintText: widget.hint,
-          suffixIcon: Icon(
-            _menuExpanded ? Icons.keyboard_arrow_down_rounded : Icons.keyboard_arrow_up_rounded,
-            color: Colors.grey,
-          )),
+        border: const OutlineInputBorder(),
+        labelText: widget.hint,
+        floatingLabelBehavior: FloatingLabelBehavior.auto,
+        hintText: widget.hint,
+        suffixIcon: Icon(
+          _menuExpanded ? Icons.keyboard_arrow_down_rounded : Icons.keyboard_arrow_up_rounded,
+          color: Colors.grey,
+        ),
+        suffixIconConstraints: const BoxConstraints(
+          minHeight: 32,
+          minWidth: 32,
+        ),
+      ),
     );
   }
 }

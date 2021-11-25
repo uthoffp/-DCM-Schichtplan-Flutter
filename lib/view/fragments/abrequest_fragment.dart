@@ -1,22 +1,39 @@
+import 'package:dcm_flutter/repositories/model/user.dart';
 import 'package:dcm_flutter/resources/strings.dart';
+import 'package:dcm_flutter/view/dialogs/abrequest_check_bottomsheet.dart';
 import 'package:dcm_flutter/view/dialogs/pictureselect_bottomsheet.dart';
+import 'package:dcm_flutter/view/widgets/drop_down.dart';
+import 'package:dcm_flutter/viewmodel/abrequest_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class AbRequestFragment extends StatefulWidget {
-  const AbRequestFragment({Key? key}) : super(key: key);
+  final User _user;
+
+  const AbRequestFragment(this._user, {Key? key}) : super(key: key);
 
   @override
-  State<AbRequestFragment> createState() => _AbRequestFragmentState();
+  State<AbRequestFragment> createState() => _AbRequestFragmentState(_user);
 }
 
 class _AbRequestFragmentState extends State<AbRequestFragment> {
   bool _menuExpanded = false;
   bool _fileAttached = false;
+  AbRequestViewModel? _viewModel;
+  var _specialTimes = [];
 
   var _date = DateTime.now();
-  final _dateController = TextEditingController();
+  var _dFormat = DateFormat('dd.MM.yyyy');
+  final _dayTypes = [Strings.menuDayFull, Strings.menuDayHalf];
+  final _abTypeController = TextEditingController();
+  final _startDateController = TextEditingController();
+  final _startHalfController = TextEditingController();
+  final _stopDateController = TextEditingController();
+  final _stopHalfController = TextEditingController();
   final _commentController = TextEditingController();
+  final _user;
+
+  _AbRequestFragmentState(this._user);
 
   void _openDatePicker() async {
     final DateTime? newDate = await showDatePicker(
@@ -29,46 +46,41 @@ class _AbRequestFragmentState extends State<AbRequestFragment> {
     if (newDate != null) {
       setState(() {
         _date = newDate;
-        _dateController.text = DateFormat('dd.MM.yyyy').format(_date);
+        _startDateController.text = _dFormat.format(_date);
       });
     }
   }
 
-  void _checkRequest() {}
-
-  void _onClickAttach(BuildContext parentContext) {}
+  void _checkRequest() {
+    AbRequestCheckBottomSheet(_viewModel!).show(context);
+  }
 
   void _removeAttachment() {}
+
+  @override
+  void initState() {
+    _viewModel = AbRequestViewModel(_user);
+    _viewModel!.getAbRequestTypes().then((value) {
+      setState(() {
+        _specialTimes = value;
+        _startDateController.text = _dFormat.format(_date);
+        _stopDateController.text = _dFormat.format(_date);
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
 
-    return Container(
+    return SingleChildScrollView(
+        child: Container(
       padding: const EdgeInsets.all(16),
       child: Column(
         children: [
-          TextFormField(
-            keyboardType: TextInputType.text,
-            decoration: InputDecoration(
-              border: const OutlineInputBorder(),
-              labelText: Strings.hintAbType,
-              floatingLabelBehavior: FloatingLabelBehavior.auto,
-              hintText: Strings.hintAbType,
-              suffixIcon: IconButton(
-                icon: Icon(
-                  _menuExpanded ? Icons.keyboard_arrow_down_rounded : Icons.keyboard_arrow_up_rounded,
-                  color: Colors.grey,
-                ),
-                onPressed: () {
-                  setState(() {
-                    _menuExpanded = !_menuExpanded;
-                  });
-                },
-              ),
-            ),
-          ),
+          DropDownInputField(
+              hint: Strings.hintAbType, options: _specialTimes, controller: _abTypeController, showInitValue: false),
           const SizedBox(height: 16),
           Align(
             alignment: Alignment.centerLeft,
@@ -81,7 +93,7 @@ class _AbRequestFragmentState extends State<AbRequestFragment> {
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(0, 8, 8, 8),
                     child: TextFormField(
-                      controller: _dateController,
+                      controller: _startDateController,
                       readOnly: true,
                       onTap: _openDatePicker,
                       textAlign: TextAlign.start,
@@ -90,26 +102,14 @@ class _AbRequestFragmentState extends State<AbRequestFragment> {
                     ),
                   )),
               Expanded(
-                flex: 3,
+                flex: 4,
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 8, 8, 8),
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          _menuExpanded ? Icons.keyboard_arrow_down_rounded : Icons.keyboard_arrow_up_rounded,
-                          color: Colors.grey,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            _menuExpanded = !_menuExpanded;
-                          });
-                        },
-                      ),
-                    ),
-                  ),
-                ),
+                    padding: const EdgeInsets.fromLTRB(0, 8, 8, 8),
+                    child: DropDownInputField(
+                      showInitValue: true,
+                      options: _dayTypes,
+                      controller: _startHalfController,
+                    )),
               )
             ],
           ),
@@ -125,7 +125,7 @@ class _AbRequestFragmentState extends State<AbRequestFragment> {
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(0, 8, 8, 8),
                     child: TextFormField(
-                      controller: _dateController,
+                      controller: _stopDateController,
                       readOnly: true,
                       onTap: _openDatePicker,
                       textAlign: TextAlign.start,
@@ -134,26 +134,14 @@ class _AbRequestFragmentState extends State<AbRequestFragment> {
                     ),
                   )),
               Expanded(
-                flex: 3,
+                flex: 4,
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 8, 8, 8),
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          _menuExpanded ? Icons.keyboard_arrow_down_rounded : Icons.keyboard_arrow_up_rounded,
-                          color: Colors.grey,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            _menuExpanded = !_menuExpanded;
-                          });
-                        },
-                      ),
-                    ),
-                  ),
-                ),
+                    padding: const EdgeInsets.fromLTRB(0, 8, 8, 8),
+                    child: DropDownInputField(
+                      showInitValue: true,
+                      options: _dayTypes,
+                      controller: _stopHalfController,
+                    )),
               ),
             ],
           ),
@@ -198,6 +186,6 @@ class _AbRequestFragmentState extends State<AbRequestFragment> {
           )
         ],
       ),
-    );
+    ));
   }
 }

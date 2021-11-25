@@ -38,7 +38,7 @@ class _MainPageState extends State<MainPage> {
           _contentWidget = ClockingFragment(_user);
           break;
         case Strings.menuAbRequest:
-          _contentWidget = AbRequestFragment();
+          _contentWidget = AbRequestFragment(_user);
           break;
         case Strings.menuActual:
           _contentWidget = Container();
@@ -112,10 +112,10 @@ class _MainPageState extends State<MainPage> {
             const Divider(height: 1, thickness: 1),
             navDrawerItem(context, Icons.vpn_key, Strings.menuPwChange),
             navDrawerItem(context, Icons.power_settings_new, Strings.menuLogout),
-            const Expanded(
+            Expanded(
               child: Align(
                 alignment: Alignment.bottomCenter,
-                child: Padding(padding: EdgeInsets.all(16), child: Text(Strings.menuFooter)),
+                child: Padding(padding: EdgeInsets.all(16), child: Text(Strings.menuFooter, style: textTheme.bodyText1,)),
               ),
             ),
           ],
