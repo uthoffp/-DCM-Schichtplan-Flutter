@@ -2,6 +2,7 @@ import 'package:dcm_flutter/repositories/model/clocking_time.dart';
 import 'package:dcm_flutter/repositories/model/user.dart';
 import 'package:dcm_flutter/resources/strings.dart';
 import 'package:dcm_flutter/view/widgets/item_clocking.dart';
+import 'package:dcm_flutter/view/widgets/message.dart';
 import 'package:dcm_flutter/viewmodel/clocking_viewmodel.dart';
 import 'package:flutter/material.dart';
 
@@ -11,15 +12,12 @@ class ClockingFragment extends StatefulWidget {
   const ClockingFragment(this._user, {Key? key}) : super(key: key);
 
   @override
-  State<ClockingFragment> createState() => _ClockingFragmentState(_user);
+  State<ClockingFragment> createState() => _ClockingFragmentState();
 }
 
 class _ClockingFragmentState extends State<ClockingFragment> {
   ClockingViewModel? _viewModel;
-  final _user;
   List<ClockingTime> _clockingTimes = [];
-
-  _ClockingFragmentState(this._user);
 
   void _onClockingPressed(int status) {
     if (_viewModel!.latestStatusEquals(status)) {
@@ -51,13 +49,14 @@ class _ClockingFragmentState extends State<ClockingFragment> {
   @override
   void initState() {
     super.initState();
-    _viewModel = ClockingViewModel(_user);
+    _viewModel = ClockingViewModel(widget._user);
     _viewModel!.getClockingTimes();
     _viewModel!.clockingTimes.stream.listen((value) {
       setState(() {
         _clockingTimes = value;
       });
     });
+    _viewModel!.errorMessage.stream.listen((text) => Message.show(context, text));
   }
 
   @override

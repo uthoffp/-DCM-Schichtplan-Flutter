@@ -3,6 +3,7 @@ import 'package:dcm_flutter/resources/strings.dart';
 import 'package:dcm_flutter/view/dialogs/abrequest_check_bottomsheet.dart';
 import 'package:dcm_flutter/view/dialogs/pictureselect_bottomsheet.dart';
 import 'package:dcm_flutter/view/widgets/drop_down.dart';
+import 'package:dcm_flutter/view/widgets/message.dart';
 import 'package:dcm_flutter/viewmodel/abrequest_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -13,17 +14,18 @@ class AbRequestFragment extends StatefulWidget {
   const AbRequestFragment(this._user, {Key? key}) : super(key: key);
 
   @override
-  State<AbRequestFragment> createState() => _AbRequestFragmentState(_user);
+  State<AbRequestFragment> createState() => _AbRequestFragmentState();
 }
 
 class _AbRequestFragmentState extends State<AbRequestFragment> {
-  bool _menuExpanded = false;
   bool _fileAttached = false;
   AbRequestViewModel? _viewModel;
   var _specialTimes = [];
+  String _btnCheckText = Strings.btnAbCheck;
 
-  var _date = DateTime.now();
-  var _dFormat = DateFormat('dd.MM.yyyy');
+  var _startDate = DateTime.now();
+  var _stopDate = DateTime.now();
+  final _dFormat = DateFormat('dd.MM.yyyy');
   final _dayTypes = [Strings.menuDayFull, Strings.menuDayHalf];
   final _abTypeController = TextEditingController();
   final _startDateController = TextEditingController();
@@ -31,40 +33,70 @@ class _AbRequestFragmentState extends State<AbRequestFragment> {
   final _stopDateController = TextEditingController();
   final _stopHalfController = TextEditingController();
   final _commentController = TextEditingController();
-  final _user;
 
-  _AbRequestFragmentState(this._user);
-
-  void _openDatePicker() async {
+  void _openDatePicker(String type) async {
     final DateTime? newDate = await showDatePicker(
       context: context,
-      initialDate: _date,
+      initialDate: type == "start" ? _startDate : _stopDate,
       firstDate: DateTime(1900, 1),
       lastDate: DateTime(2099, 12),
       helpText: 'Datum auswählen.',
     );
     if (newDate != null) {
       setState(() {
-        _date = newDate;
-        _startDateController.text = _dFormat.format(_date);
+        if (type == "start") {
+          _startDateController.text = _dFormat.format(newDate);
+          _viewModel!.start = newDate;
+          _startDate = newDate;
+        } else {
+          _stopDateController.text = _dFormat.format(newDate);
+          _viewModel!.stop = newDate;
+          _stopDate = newDate;
+        }
       });
     }
   }
 
-  void _checkRequest() {
-    AbRequestCheckBottomSheet(_viewModel!).show(context);
+  void _onClickSend() {
+    int startHalf = _viewModel!.dayTypeToKey(_startHalfController.text);
+    int stopHalf = _viewModel!.dayTypeToKey(_stopHalfController.text);
+
+    if (_viewModel!.validateUserInputs(startHalf, stopHalf, _commentController.text)) {
+      if (_viewModel!.isDirectSend()) {
+        _viewModel!.sendAbRequest().then((value) => Message.show(context, "Antrag erfolgreich gesendet.")).onError(
+            (error, stackTrace) =>
+                "Beim Senden des Antrags ist ein Fehler aufgetreten. Bitte versuchen sie es später erneut.");
+      } else {
+        _viewModel!.getRequestDays();
+        AbRequestCheckBottomSheet.show(context, _viewModel!);
+      }
+    }
+  }
+
+  void _onTypeChange() {
+    _viewModel!.setType(_abTypeController.text);
+    setState(() {
+      if (_viewModel!.isDirectSend()) {
+        _btnCheckText = Strings.btnSendRequest;
+      } else {
+        _btnCheckText = Strings.btnAbCheck;
+      }
+    });
   }
 
   void _removeAttachment() {}
 
   @override
   void initState() {
-    _viewModel = AbRequestViewModel(_user);
+    super.initState();
+    _viewModel = AbRequestViewModel(widget._user);
     _viewModel!.getAbRequestTypes().then((value) {
       setState(() {
         _specialTimes = value;
-        _startDateController.text = _dFormat.format(_date);
-        _stopDateController.text = _dFormat.format(_date);
+        _startDateController.text = _dFormat.format(_startDate);
+        _stopDateController.text = _dFormat.format(_stopDate);
+
+        _viewModel!.message.stream.listen((text) => Message.show(context, text));
       });
     });
   }
@@ -80,7 +112,11 @@ class _AbRequestFragmentState extends State<AbRequestFragment> {
       child: Column(
         children: [
           DropDownInputField(
-              hint: Strings.hintAbType, options: _specialTimes, controller: _abTypeController, showInitValue: false),
+              hint: Strings.hintAbType,
+              options: _specialTimes,
+              controller: _abTypeController,
+              showInitValue: false,
+              onChanged: _onTypeChange),
           const SizedBox(height: 16),
           Align(
             alignment: Alignment.centerLeft,
@@ -95,7 +131,7 @@ class _AbRequestFragmentState extends State<AbRequestFragment> {
                     child: TextFormField(
                       controller: _startDateController,
                       readOnly: true,
-                      onTap: _openDatePicker,
+                      onTap: () => _openDatePicker("start"),
                       textAlign: TextAlign.start,
                       decoration:
                           const InputDecoration(prefixIcon: Icon(Icons.calendar_today), border: OutlineInputBorder()),
@@ -127,7 +163,7 @@ class _AbRequestFragmentState extends State<AbRequestFragment> {
                     child: TextFormField(
                       controller: _stopDateController,
                       readOnly: true,
-                      onTap: _openDatePicker,
+                      onTap: () => _openDatePicker("stop"),
                       textAlign: TextAlign.start,
                       decoration:
                           const InputDecoration(prefixIcon: Icon(Icons.calendar_today), border: OutlineInputBorder()),
@@ -177,10 +213,9 @@ class _AbRequestFragmentState extends State<AbRequestFragment> {
           ),
           const SizedBox(height: 8),
           Align(
-            child: ElevatedButton.icon(
-              onPressed: _checkRequest,
-              icon: const Icon(Icons.save, size: 18),
-              label: const Text(Strings.btnAbCheck, style: TextStyle(fontSize: 18)),
+            child: ElevatedButton(
+              onPressed: _onClickSend,
+              child: Text(_btnCheckText, style: const TextStyle(fontSize: 18)),
             ),
             alignment: Alignment.centerRight,
           )

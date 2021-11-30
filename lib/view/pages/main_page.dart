@@ -64,14 +64,12 @@ class _MainPageState extends State<MainPage> {
     }));
   }
 
-
   @override
   void initState() {
     super.initState();
     setState(() {
       _contentWidget = TimeFragment(Strings.menuPlanned, _user, UniqueKey());
     });
-
   }
 
   @override
@@ -115,7 +113,12 @@ class _MainPageState extends State<MainPage> {
             Expanded(
               child: Align(
                 alignment: Alignment.bottomCenter,
-                child: Padding(padding: EdgeInsets.all(16), child: Text(Strings.menuFooter, style: textTheme.bodyText1,)),
+                child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Text(
+                      Strings.menuFooter,
+                      style: textTheme.bodyText1,
+                    )),
               ),
             ),
           ],

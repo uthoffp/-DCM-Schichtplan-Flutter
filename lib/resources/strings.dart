@@ -30,12 +30,11 @@ class Strings {
   static const String hintAbType = "Fehlzeit Typ";
   static const String hintFirstDayOfWeek = "Erster Tag der Woche";
 
-
   static const String btnAbCheck = "Antrag prüfen";
   static const String btnAttach = "Anhang Anfügen";
   static const String btnPwChange = "Passwort ändern";
   static const String btnLogin = "Anmelden";
-  static const String btnSendRequest = "Antrag Stellen";
+  static const String btnSendRequest = "Antrag stellen";
   static const String btnAttachChange = "Anhang ändern";
   static const String btnRemoveAttachment = "Anhang entfernen";
 

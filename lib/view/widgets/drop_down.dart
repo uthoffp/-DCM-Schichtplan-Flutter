@@ -52,9 +52,11 @@ class _DropDownInputFieldState<T> extends State<DropDownInputField<T>> {
   }
 
   void _onOptionSelected(String text) {
-    widget.controller.text = text;
-    if(widget.onChanged != null) widget.onChanged!();
-    Navigator.pop(context, true);
+    setState(() {
+      widget.controller.text = text;
+      if(widget.onChanged != null) widget.onChanged!();
+      Navigator.pop(context, true);
+    });
   }
 
   @override
