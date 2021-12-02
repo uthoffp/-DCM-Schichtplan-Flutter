@@ -1,3 +1,4 @@
+// Constant string resources used inside the DCM Schichtplan application
 class Strings {
   static const String appName = "DCM Schichtplan";
 

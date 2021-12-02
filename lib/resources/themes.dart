@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+// Constant widget styles, fonts and colors used inside the DCM Schichtplan application
 class DcmTheme {
   static TextTheme lightTextTheme = TextTheme(
     bodyText1: GoogleFonts.openSans(

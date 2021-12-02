@@ -3,6 +3,7 @@ import 'package:dcm_flutter/repositories/model/user.dart';
 import 'package:dcm_flutter/resources/strings.dart';
 import 'package:http/http.dart' as http;
 
+//performs login and in later versions password reset requests on the dcm api
 class UserRepository {
   Future<User> login(String cId, String username, String password) async {
     String url = Strings.baseUrl + "/company/$cId/login/$username?pw=$password";

@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 
 import 'login_page.dart';
 
+// The Main Page holds all fragments and most ui elements. Here user can open the menu and select different fragments or logout
 class MainPage extends StatefulWidget {
   final User _user;
 
@@ -26,6 +27,7 @@ class _MainPageState extends State<MainPage> {
 
   _MainPageState(this._user);
 
+  // select fragment based on selectedFragment parameter. This gets called when one menue element gets clicked
   void selectDestination(String selectedFragment) {
     setState(() {
       _selectedFragment = selectedFragment;
@@ -58,20 +60,23 @@ class _MainPageState extends State<MainPage> {
     });
   }
 
+  // logout, open login page again
   void logout() {
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
       return const LoginPage();
     }));
   }
 
+  // sets default page as "Dientplan"
   @override
   void initState() {
     super.initState();
     setState(() {
-      _contentWidget = TimeFragment(Strings.menuPlanned, _user, UniqueKey());
+      _contentWidget = TimeFragment(Strings.menuPlanned, _user, UniqueKey());   //UniqueKey needed to differentiate between "Dienstplan" and "Ist-Zeiten"
     });
   }
 
+  //Main Page containing app bar, content and menu drawer to select main content fragments
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -128,6 +133,7 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
+  // return menu drawer element
   Widget navDrawerItem(BuildContext context, IconData icon, String text) {
     return Container(
       padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),

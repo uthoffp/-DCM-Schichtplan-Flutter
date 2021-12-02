@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 import 'main_page.dart';
 
+// Starting Page selected by DCMApp class inside main.dart
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -24,6 +25,35 @@ class _LoginPageState extends State<LoginPage> {
   bool _isLoading = false;
   bool _pwVisible = false;
 
+  // hide or unhide progress indicator
+  void _toggleLoading(bool value) {
+    setState(() {
+      _isLoading = value;
+    });
+  }
+
+  /*
+  Gets called, when login button gets clicked.
+  Calls login function from LoginPageViewModel.
+    If successful, the Login Page gets replaced by the MainPage.dart
+    If login failed an error message is shown
+   */
+  void _login() {
+    _toggleLoading(true);
+    _viewModel.login(_companySelectController.text, _usernameController.text, _passwordController.text).then((user) {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
+        return MainPage(user);
+      }));
+    }).onError((error, stackTrace) {
+      const snackBar = SnackBar(
+        behavior: SnackBarBehavior.floating,
+        content: Text("Benutzername oder Kennwort ist falsch."),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }).whenComplete(() => _toggleLoading(false));
+  }
+
+  // Requests Company Data for DropDown list and listens for results from LoginPageViewModel
   @override
   void initState() {
     super.initState();
@@ -38,31 +68,12 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
+
+  // Login Page UI
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
-
-    void _toggleLoading(bool value) {
-      setState(() {
-        _isLoading = value;
-      });
-    }
-
-    void _login() {
-      _toggleLoading(true);
-      _viewModel.login(_companySelectController.text, _usernameController.text, _passwordController.text).then((user) {
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
-          return MainPage(user);
-        }));
-      }).onError((error, stackTrace) {
-        const snackBar = SnackBar(
-          behavior: SnackBarBehavior.floating,
-          content: Text("Benutzername oder Kennwort ist falsch."),
-        );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      }).whenComplete(() => _toggleLoading(false));
-    }
 
     return Scaffold(
       appBar: AppBar(
