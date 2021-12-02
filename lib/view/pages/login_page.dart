@@ -3,6 +3,7 @@ import 'package:dcm_flutter/view/widgets/drop_down.dart';
 import 'package:dcm_flutter/viewmodel/login_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'main_page.dart';
 
@@ -78,6 +79,24 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(Strings.appName + " Login"),
+        actions: [
+          IconButton(
+              onPressed: () => showAboutDialog(context: context, children: [
+                OutlinedButton.icon(
+                  onPressed: () async {
+                    const url = 'https://cif24.de/login?customer=47110815';
+                    if (await canLaunch(url)) {
+                      await launch(url);
+                    } else {
+                      throw 'Could not launch $url';
+                    }
+                  },
+                  icon: const Icon(Icons.web_asset, size: 18),
+                  label: const Text(Strings.menuWeb),
+                ),
+              ]),
+              icon: const Icon(Icons.more_vert))
+        ],
       ),
       body: Column(children: [
         Visibility(

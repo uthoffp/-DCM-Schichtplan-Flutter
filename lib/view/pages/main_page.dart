@@ -7,6 +7,7 @@ import 'package:dcm_flutter/view/fragments/pwchange_fragment.dart';
 import 'package:dcm_flutter/view/fragments/time_fragment.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'login_page.dart';
 
@@ -72,7 +73,8 @@ class _MainPageState extends State<MainPage> {
   void initState() {
     super.initState();
     setState(() {
-      _contentWidget = TimeFragment(Strings.menuPlanned, _user, UniqueKey());   //UniqueKey needed to differentiate between "Dienstplan" and "Ist-Zeiten"
+      _contentWidget = TimeFragment(Strings.menuPlanned, _user,
+          UniqueKey()); //UniqueKey needed to differentiate between "Dienstplan" and "Ist-Zeiten"
     });
   }
 
@@ -85,6 +87,24 @@ class _MainPageState extends State<MainPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(_selectedFragment),
+        actions: [
+          IconButton(
+              onPressed: () => showAboutDialog(context: context, children: [
+                    OutlinedButton.icon(
+                      onPressed: () async {
+                        const url = 'https://cif24.de/login?customer=47110815';
+                        if (await canLaunch(url)) {
+                          await launch(url);
+                        } else {
+                          throw 'Could not launch $url';
+                        }
+                      },
+                      icon: const Icon(Icons.web_asset, size: 18),
+                      label: const Text(Strings.menuWeb),
+                    ),
+                  ]),
+              icon: const Icon(Icons.more_vert))
+        ],
       ),
       drawer: Drawer(
         child: Column(
