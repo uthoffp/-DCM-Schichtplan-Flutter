@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
 
 import 'package:dcm_flutter/repositories/datasource/abrequest_repository.dart';
 import 'package:dcm_flutter/repositories/model/request_days.dart';
@@ -19,8 +21,10 @@ class AbRequestViewModel {
   int firstDayHalf = 0;
   int lastDayHalf = 0;
   String? comment;
+  File? image;
 
   StreamController message = StreamController<String>();
+  StreamController imageSelected = StreamController<bool>();
 
   AbRequestViewModel(this._user) {
     _repo = AbRequestRepository(_user);
@@ -60,8 +64,10 @@ class AbRequestViewModel {
   }
 
   Future<void> sendAbRequest() async {
+    String? imgB64 = image != null ? base64Encode(image!.readAsBytesSync()) : null;
+
     return _repo!.postAbRequest(
-        type!, dateFormat.format(start), firstDayHalf, dateFormat.format(stop), lastDayHalf, comment!, null);
+        type!, dateFormat.format(start), firstDayHalf, dateFormat.format(stop), lastDayHalf, comment!, imgB64);
   }
 
   Future<RequestDays> getRequestDays() {
@@ -69,9 +75,19 @@ class AbRequestViewModel {
   }
 
   RequestDays adjustRequestDays(RequestDays requestDays) {
-    if(firstDayHalf == 1) requestDays.thisRequest += 0.5;
-    if(lastDayHalf == 1 && requestDays.thisRequest <= -1) requestDays.thisRequest += 0.5;
+    if (firstDayHalf == 1) requestDays.thisRequest += 0.5;
+    if (lastDayHalf == 1 && requestDays.thisRequest <= -1) requestDays.thisRequest += 0.5;
     requestDays.remaining = requestDays.open + requestDays.thisRequest;
     return requestDays;
+  }
+
+  void setImage(String imagePath) {
+    image = File(imagePath);
+    imageSelected.add(true);
+  }
+
+  void removeImage() {
+    image = null;
+    imageSelected.add(false);
   }
 }

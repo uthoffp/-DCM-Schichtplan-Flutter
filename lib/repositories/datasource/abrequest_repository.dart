@@ -26,7 +26,7 @@ class AbRequestRepository {
   }
 
   Future<void> postAbRequest(SpecialTime type, String start, int startHalf, String stop, int stopHalf, String? comment,
-      Object? attachment) async {
+      String? attachment) async {
     Map<String, String> requestHeaders = {'Content-type': 'application/json', 'auth': _user.token};
     var requestBody = json.encode({
       "nameValuePairs": {

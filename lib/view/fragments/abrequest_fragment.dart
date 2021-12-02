@@ -84,8 +84,6 @@ class _AbRequestFragmentState extends State<AbRequestFragment> {
     });
   }
 
-  void _removeAttachment() {}
-
   @override
   void initState() {
     super.initState();
@@ -95,8 +93,12 @@ class _AbRequestFragmentState extends State<AbRequestFragment> {
         _specialTimes = value;
         _startDateController.text = _dFormat.format(_startDate);
         _stopDateController.text = _dFormat.format(_stopDate);
-
-        _viewModel!.message.stream.listen((text) => Message.show(context, text));
+      });
+      _viewModel!.message.stream.listen((text) => Message.show(context, text));
+      _viewModel!.imageSelected.stream.listen((value) {
+        setState(() {
+          _fileAttached = value;
+        });
       });
     });
   }
@@ -196,22 +198,28 @@ class _AbRequestFragmentState extends State<AbRequestFragment> {
           ),
           const SizedBox(height: 8),
           Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               OutlinedButton.icon(
                 onPressed: () {
-                  PictureSelectBottomSheet.show(context);
+                  PictureSelectBottomSheet.show(context, _viewModel!);
                 },
                 icon: const Icon(Icons.attach_file, size: 18),
-                label: const Text(Strings.btnAttach),
+                label: Text(_fileAttached ? Strings.btnAttachChange : Strings.btnAttach),
               ),
               const SizedBox(width: 16),
               Visibility(
                   visible: _fileAttached,
-                  child: GestureDetector(onTap: _removeAttachment, child: const Text(Strings.btnRemoveAttachment)))
+                  child: TextButton.icon(
+                    onPressed: () {
+                      _viewModel!.removeImage();
+                    },
+                    label: const Text(Strings.btnRemoveAttachment),
+                    icon: const Icon(Icons.delete_outline),
+                  ))
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 16),
           Align(
             child: ElevatedButton(
               onPressed: _onClickSend,
