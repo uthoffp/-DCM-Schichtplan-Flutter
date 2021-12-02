@@ -87,6 +87,7 @@ class _TimeFragmentState extends State<TimeFragment> {
             children: [
               FloatingActionButton(
                 onPressed: _onClickPrevWeek,
+                heroTag: "btnPrevWeek",
                 mini: true,
                 child: const Icon(Icons.arrow_back_ios_rounded),
               ),
@@ -106,6 +107,7 @@ class _TimeFragmentState extends State<TimeFragment> {
               ),
               FloatingActionButton(
                 onPressed: _onClickNextWeek,
+                heroTag: "btnNextWeek",
                 mini: true,
                 child: const Icon(Icons.arrow_forward_ios_rounded),
               )
