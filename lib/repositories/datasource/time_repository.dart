@@ -6,6 +6,7 @@ import 'package:dcm_flutter/resources/strings.dart';
 import 'package:http/http.dart' as http;
 
 class TimeRepository {
+  //get actual times for the Ist-Zeiten fragment
   Future<List<TimeInfo>> getTimesActual(User user, String start, String stop) async {
     Map<String, String> requestHeaders = {'Content-type': 'application/json', 'auth': user.token};
     String url = Strings.baseUrl + "/company/${user.company}/user/${user.uId}/actual/$start/$stop";
@@ -20,6 +21,7 @@ class TimeRepository {
     }
   }
 
+  //get actual times for the Dienstplan fragment
   Future<List<TimeInfo>> getTimesPlanned(User user, String start, String stop) async {
     Map<String, String> requestHeaders = {'Content-type': 'application/json', 'auth': user.token};
     String url = Strings.baseUrl + "/company/${user.company}/user/${user.uId}/planned/$start/$stop";

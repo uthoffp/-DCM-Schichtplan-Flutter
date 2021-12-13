@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+//dropdown widget which shows an outlined textfield and displays a menu dialog when clicked as dropdown menue
 class DropDownInputField<T> extends StatefulWidget {
   final String? hint;
   final List<T> options;

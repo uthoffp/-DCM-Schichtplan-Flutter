@@ -6,6 +6,7 @@ import 'package:dcm_flutter/resources/strings.dart';
 import 'package:http/http.dart' as http;
 
 class CompanyRepository {
+  //get all companies registered in the database
   Future<List<Company>> getAllCompanies() async {
     String url = Strings.baseUrl + "/company";
     var response = await http.get(Uri.parse(url));
@@ -18,6 +19,7 @@ class CompanyRepository {
     }
   }
 
+  //get users company information
   Future<Company> getCompany(User user) async {
     Map<String, String> requestHeaders = {'Content-type': 'application/json', 'auth': user.token};
 

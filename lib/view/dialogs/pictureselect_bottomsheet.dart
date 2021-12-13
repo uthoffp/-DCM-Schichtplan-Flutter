@@ -2,6 +2,7 @@ import 'package:dcm_flutter/viewmodel/abrequest_viewmodel.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 
+//shows the bottom sheet where the user can select where the attachments should be chosen from (gallery or camera)
 class PictureSelectBottomSheet extends StatefulWidget {
   final AbRequestViewModel _viewModel;
 

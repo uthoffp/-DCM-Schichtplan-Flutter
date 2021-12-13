@@ -10,6 +10,7 @@ class ClockingRepository {
 
   ClockingRepository(this._user);
 
+  //request the 10 latest clocking times done by the user
   Future<List<ClockingTime>> getLatestClockingTimes() async {
     Map<String, String> requestHeaders = {'Content-type': 'application/json', 'auth': _user.token};
     String url = Strings.baseUrl + "/company/${_user.company}/user/${_user.uId}/actual/latest";
@@ -24,6 +25,7 @@ class ClockingRepository {
     }
   }
 
+  //post request to add new clocking time to the database
   Future<void> addClockingTime(int status) async {
     Map<String, String> requestHeaders = {'Content-type': 'application/json', 'auth': _user.token};
     var requestBody = json.encode({

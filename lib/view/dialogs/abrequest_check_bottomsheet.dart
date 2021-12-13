@@ -4,11 +4,13 @@ import 'package:dcm_flutter/view/widgets/message.dart';
 import 'package:dcm_flutter/viewmodel/abrequest_viewmodel.dart';
 import 'package:flutter/material.dart';
 
+//shows the bottomsheet to display if the user can send the absence request or not
 class AbRequestCheckBottomSheet extends StatefulWidget {
   final AbRequestViewModel _viewModel;
 
   AbRequestCheckBottomSheet(this._viewModel);
 
+  //static function that gets called to show the AbRequestCheckBottomSheet class
   static Future<dynamic> show(BuildContext context, AbRequestViewModel viewModel) {
     return showModalBottomSheet(
         shape: RoundedRectangleBorder(
@@ -24,6 +26,7 @@ class AbRequestCheckBottomSheet extends StatefulWidget {
   State<AbRequestCheckBottomSheet> createState() => _AbRequestCheckBottomSheetState();
 }
 
+//class containing the bottomsheet ui
 class _AbRequestCheckBottomSheetState extends State<AbRequestCheckBottomSheet> {
   RequestDays _requestDays =
       RequestDays(open: 0, corrections: 0, prevYear: 0, remaining: 0, taken: 0, thisRequest: 0, thisYear: 0, total: 0);

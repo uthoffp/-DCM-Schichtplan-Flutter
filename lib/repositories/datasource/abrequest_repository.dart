@@ -11,6 +11,7 @@ class AbRequestRepository {
 
   AbRequestRepository(this._user);
 
+  //request to get the absence types set by the database
   Future<List<SpecialTime>> getSpecialTimes() async {
     Map<String, String> requestHeaders = {'Content-type': 'application/json', 'auth': _user.token};
     String url = Strings.baseUrl + "/company/${_user.company}/specialtime";
@@ -25,6 +26,7 @@ class AbRequestRepository {
     }
   }
 
+  //builds http header and body for post request to add new absence request to the database
   Future<void> postAbRequest(SpecialTime type, String start, int startHalf, String stop, int stopHalf, String? comment,
       String? attachment) async {
     Map<String, String> requestHeaders = {'Content-type': 'application/json', 'auth': _user.token};
@@ -52,6 +54,7 @@ class AbRequestRepository {
     }
   }
 
+  //request to get how many holidays the user has left etc.
   Future<RequestDays> requestDays(String start, String stop) async {
     Map<String, String> requestHeaders = {'Content-type': 'application/json', 'auth': _user.token};
     String url = Strings.baseUrl + "/company/${_user.company}/user/${_user.uId}/holidays/$start/$stop";

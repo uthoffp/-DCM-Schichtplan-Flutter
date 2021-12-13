@@ -3,6 +3,7 @@ import 'package:dcm_flutter/viewmodel/time_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+//list item to display shifts etc. for the Dienstplan and Ist-Zeiten fragments
 class TimeInfoItem extends StatelessWidget {
   final TimeInfo _timeInfo;
 

@@ -2,6 +2,7 @@ import 'package:dcm_flutter/repositories/model/clocking_time.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+//list item to display clocking times
 class ClockingItem extends StatelessWidget {
   final ClockingTime _clockingTime;
 
