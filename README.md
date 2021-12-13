@@ -8,7 +8,7 @@ Flutter Version of the CiF DCM Personalmanager for iOS and Android.
 Download or clone this repo by using the link below:
 
 ```
-https://github.com/zubairehman/flutter-boilerplate-project.git
+https://github.com/uthoffp/DCM-Schichtplan-Flutter.git
 ```
 
 **Step 2:**
