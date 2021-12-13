@@ -37,7 +37,7 @@ flutter-app/
 |- test
 ```
 
-Here is the folder structure we have been using in this project. The lib folder contains the main code for the application. This project uses the MVVM Pattern.
+Here is the folder structure we I been using in this project. The lib folder contains the main code for the application. This project uses the MVVM Pattern.
 
 ```
 lib/
