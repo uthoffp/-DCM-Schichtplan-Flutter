@@ -56,3 +56,6 @@ The lib directory contains the following structure:
 4- ui — Contains all the ui of the project, contains sub directory for each screen or fragment.
 5- main.dart - This is the starting point for the application. All the application level configurations are defined in this file i.e, theme, routes, title, orientation etc.
 ```
+
+### Install Flutter DCM-Schichtplan
+To install the DCM-Schichtplan release build on your Android device copy dcm-schitplan.apk on your device and execute it.
